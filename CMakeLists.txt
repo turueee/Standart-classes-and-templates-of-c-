@@ -5,7 +5,8 @@ project(${PROJECT_NAME}) # Название проекта
 
 set(application Application) #Переменная с именем приложения
 set(strlibrary StringLibrary)
-set(arrlibrary ArrayLibrary) #Переменная с именем библиотеки
+set(arrlibrary ArrayLibrary)
+set(ritlibrary ReverseIteratorLibrary) #Переменная с именем библиотеки
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) 
 if(NOT CMAKE_BUILD_TYPE)
@@ -14,7 +15,9 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TString)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TArray)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TReverseIterator)
 
+add_subdirectory(TReverseIterator)
 add_subdirectory(TString)
 add_subdirectory(TArray) #Добавляем директорию с под-CMakeList-ом, и выполняем под-CMakeList
 add_subdirectory(Main)

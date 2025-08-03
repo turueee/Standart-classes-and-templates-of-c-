@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "TReverseIterator.h"
 using namespace std;
 
 template<typename T, size_t N>
@@ -25,6 +26,12 @@ public:
 	const T* end() const noexcept;
 	const T* cbegin() const noexcept;
 	const T* cend() const noexcept;
+	TReverseIterator<T*> rbegin() noexcept;
+	TReverseIterator<T*> rend() noexcept;
+	TReverseIterator<const T*> rbegin() const noexcept;
+	TReverseIterator<const T*> rend() const noexcept;
+	TReverseIterator<const T*> rcbegin() const noexcept;
+	TReverseIterator<const T*> rcend() const noexcept;
 
 	constexpr bool Empty() const noexcept;
 	constexpr size_t Size() const noexcept;
@@ -122,6 +129,42 @@ template<typename T, size_t N>
 inline const T* TArray<T, N>::end() const noexcept
 {
 	return &elems[0] + N;
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<T*> TArray<T, N>::rbegin() noexcept
+{
+	return TReverseIterator<T*>(elems + N);
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<const T*> TArray<T, N>::rbegin() const noexcept
+{
+	return TReverseIterator<const T*>(elems + N);
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<T*> TArray<T, N>::rend() noexcept
+{
+	return TReverseIterator<T*>(elems);
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<const T*> TArray<T, N>::rend() const noexcept
+{
+	return TReverseIterator<const T*>(elems);
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<const T*> TArray<T, N>::rcbegin() const noexcept
+{
+	return TReverseIterator<const T*>(cend());
+}
+
+template<typename T, size_t N>
+inline TReverseIterator<const T*> TArray<T, N>::rcend() const noexcept
+{
+	return TReverseIterator<const T*>(cbegin());
 }
 
 template<typename T, size_t N>
