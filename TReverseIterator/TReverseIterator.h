@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstddef>
 using namespace std;
 
 template<typename Iterator>
@@ -11,11 +12,9 @@ public:
 	constexpr TReverseIterator();
 	explicit constexpr TReverseIterator(Iterator x);
 
-	template<class U>
-	constexpr TReversIterator(const TReverseIterator<U>& other) : current(other.base()) {};
+	constexpr TReverseIterator(const TReverseIterator& other) : current(other.base()) {};
 
-	template<class U>
-	constexpr TReversIterator& operator=(const TReverseIterator <U>& other)
+	constexpr TReverseIterator& operator=(const TReverseIterator& other)
 	{
 		current = other.Base;
 		return *this;

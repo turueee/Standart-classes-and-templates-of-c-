@@ -1,14 +1,16 @@
 #include <iostream>
+#include <cstddef>
 #include "TString.h"
-#include "TArray.h"
+#include "TVector.h"
+#include "TAllocator.h"
 
 using namespace std;
 
 int main()
 {
 	const TString s("Apple"), r("aAppledd");
-	TArray<int, 2> a;
-	for (char x : s)
-		cout << x;
-	cout << s << r;
+	size_t d = 4;
+	TVector<TString> a(d,s);
+	TVector<int> f(2, 4);
+	cout << a<<f;
 }

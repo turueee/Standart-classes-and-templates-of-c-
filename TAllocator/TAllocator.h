@@ -29,8 +29,20 @@ public:
 	[[nodiscard]] constexpr T* Allocate(size_type n);
 	constexpr void Deallocate(pointer p, size_type n);
 
+	template<typename U,typename... Args>
+	constexpr void Construct(U* p, Args&&... args);
+	template<typename U>
+	constexpr void Destroy(U* p);
+
 	constexpr bool operator== (const TAllocator&) const noexcept;
+	constexpr bool operator!= (const TAllocator&) const noexcept;
 };
+
+template<typename T>
+constexpr T&& Forward(T& t) noexcept
+{
+	return static_cast<T&&>(t);
+}
 
 template<typename T>
 inline constexpr T* TAllocator<T>::Allocate(size_type n)
@@ -48,4 +60,24 @@ template<typename T>
 inline constexpr bool TAllocator<T>::operator==(const TAllocator&) const noexcept
 {
 	return true;
+}
+
+template<typename T>
+inline constexpr bool TAllocator<T>::operator!=(const TAllocator&) const noexcept
+{
+	return false;
+}
+
+template<typename T>
+template<typename U, typename ...Args>
+inline constexpr void TAllocator<T>::Construct(U* p, Args && ...args)
+{
+	new (static_cast<void*>(p)) U(Forward<Args>(args)...);
+}
+
+template<typename T>
+template<typename U>
+inline constexpr void TAllocator<T>::Destroy(U* p)
+{
+	p->~U();
 }
